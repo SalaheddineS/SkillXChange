@@ -194,7 +194,7 @@ export default function GetInTouchSimple() {
   <Avatar
     mt="xl"
     ml="xl"
-    size="xl"
+    size={200}
     src={image ? URL.createObjectURL(image) : undefined}
   />
 </Flex>

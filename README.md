@@ -1,5 +1,5 @@
 # SkillExchange
-
+![SkillExchange Gif](https://giffiles.alphacoders.com/158/158667.gif)
 Welcome to SkillExchange, the app that lets you trade your skills like Pokémon cards!
 
 ## About
@@ -24,4 +24,4 @@ Want to help make SkillExchange even better? We welcome contributions from devel
 
 Thanks for checking out SkillExchange! We hope you'll have as much fun exchanging skills as we had building this app. And remember: sharing is caring, but trading is even better!
 
-![SkillExchange Gif](https://giffiles.alphacoders.com/158/158667.gif)
+

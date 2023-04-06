@@ -78,7 +78,7 @@ export default function NavbarMinimal() {
   ));
 
   return (
-    <Navbar height={750} width={{ base: 80 }} p="md">
+    <Navbar  width={{ base: 80 }} p="md"  sx={{position:'fixed',left:0,height:'93%'}}>
     
       <Navbar.Section grow mt={50}>
         <Stack justify="center" spacing={0}>

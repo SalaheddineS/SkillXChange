@@ -105,7 +105,7 @@ export default function HeaderMiddle({ links }: HeaderMiddleProps) {
   ));
 
   return (
-    <Header height={56} >
+    <Header height={56} sx={{position:'fixed',top:0,width:'100%'}}>
       <Container className={classes.inner}>
       <Burger opened={opened} onClick={toggle} className={classes.burger} size="sm" />
 

@@ -60,7 +60,7 @@ export default function GetInTouchSimple() {
   });
 
   return (
-    <Container size={1040} my={5}>
+    <Container size={1040} >
       <form onSubmit={form.onSubmit(() => {})}>
         <Title
           order={2}

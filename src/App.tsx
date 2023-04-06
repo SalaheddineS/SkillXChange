@@ -11,6 +11,8 @@ import Features from "./Pages/Features";
 import Error404 from "./Pages/Error404";
 import Authentification from "./Pages/Authentification";
 import SignUp from "./Pages/SignUp";
+import ContactUs from "./Pages/ContactUs";
+
 import { Route, Routes,BrowserRouter } from "react-router-dom";
 function App() {
   const [colorScheme, setColorScheme] = useState<ColorScheme>("dark");
@@ -28,7 +30,7 @@ function App() {
         withGlobalStyles
         withNormalizeCSS
       >
-        <Header
+        <Header 
           links={[
             {
               link: "/",
@@ -39,18 +41,19 @@ function App() {
               label: "Features",
             },
             {
-              link: "/pricing",
-              label: "Pricing",
+              link: "/ContactUs",
+              label: "Contact Us",
             },
           ]}
         />
-        <Flex>
+        <Flex my={"5%"}>
           <SideBar />
           <Routes>
             <Route path="*" element={<Error404 />} />
             <Route path="/" element={<Features />} />
             <Route path="/Authentification" element={<Authentification />} />
             <Route path="/SignUp" element={<SignUp />} />
+            <Route path="/ContactUs" element={<ContactUs/>} />
           </Routes>
         </Flex>
       </MantineProvider>

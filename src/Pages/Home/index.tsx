@@ -132,7 +132,7 @@ import {
       </Card>
     ));
     return (
-      <>
+      <div style={{marginTop:'-7%'}}>
     <HeroHeader />
       <Container size="lg" py="xl">
         
@@ -169,7 +169,6 @@ import {
         <UserCard image={userinfo2.image} avatar={userinfo2.avatar} name={userinfo2.name} job={userinfo2.job} stats={userinfo2.stats}  />
         </Flex>
       </Container>
-      
-      </>
+      </div>
     );
   }

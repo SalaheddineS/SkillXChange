@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { createStyles, Header, Group, Container, Burger, Button, Transition, Paper } from '@mantine/core';
+import { createStyles, Header, Group, Container, Burger, Button, Transition, Paper,Image } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { MantineLogo } from '@mantine/ds';
+import astro from '../../Utilities/SVGs/astro.svg'
 import LightNdark from '../LightNdarkModes';
 import {Link} from 'react-router-dom';
 const HEADER_HEIGHT =58;
@@ -120,7 +120,7 @@ export default function HeaderMiddle({ links }: HeaderMiddleProps) {
           {items}
         </Group>
 
-        <MantineLogo size={28} />
+        <Image src={astro} height={50} width={50}/>
        
         <Group spacing={19} className={classes.social}  position="right" noWrap >
             <Link to={'/Authentification'}>

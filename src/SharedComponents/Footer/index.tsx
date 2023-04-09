@@ -132,7 +132,7 @@ export default function FooterLinks({ data }: FooterLinksProps) {
   return (
     <footer className={classes.footer}>
     
-      <Container className={classes.afterFooter}>
+      <Container className={classes.afterFooter} sx={{bottom:0,width:'100%'}}>
         <Text color="dimmed" size="sm">
           © 2023 Skill Exchange , Inc. All rights reserved.
         </Text>

@@ -51,7 +51,7 @@ function App() {
           ]}
         />
         
-          <div style={{marginTop:'5%'}}>
+          <div style={{marginTop:'8%'}}>
           <Routes>
             <Route path="*" element={<Error404 />} />
             <Route path="/" element={<Home />} />

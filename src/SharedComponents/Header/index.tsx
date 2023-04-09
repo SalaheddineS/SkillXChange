@@ -121,7 +121,7 @@ export default function HeaderMiddle({ links }: HeaderMiddleProps) {
         </Group>
 
         <MantineLogo size={28} />
-
+       
         <Group spacing={19} className={classes.social}  position="right" noWrap >
             <Link to={'/Authentification'}>
             <Button variant="default">Log in</Button>

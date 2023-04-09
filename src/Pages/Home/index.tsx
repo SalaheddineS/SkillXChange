@@ -7,9 +7,14 @@ import {
     Card,
     SimpleGrid,
     Container,
+    Divider,
+    Flex,
   } from '@mantine/core';
   import { IconGauge, IconUser, IconCookie } from '@tabler/icons';
-  
+  import Carousel from '../../SingleComponents/Carousel'
+  import UserCard from '../../SingleComponents/UserCard'
+  import HeroHeader from '../../SingleComponents/HeroHeader'
+  import HeroHeader2 from '../../SingleComponents/HeroHeader2'
   const mockdata = [
     {
       title: 'Extreme performance',
@@ -30,7 +35,46 @@ import {
       icon: IconCookie,
     },
   ];
-  
+  const userinfo1={
+    image: "https://cdn.pixabay.com/photo/2017/02/16/19/47/bokeh-2072271__480.jpg",
+    avatar: "https://media.licdn.com/dms/image/D4E03AQGmtJUqmCtGnA/profile-displayphoto-shrink_800_800/0/1664536367171?e=1686787200&v=beta&t=kXWxWB5AJz1KPqcTMo00ssD2L63ik2xSfzerJmj_KuA",
+    name: "Dahibi Kenza",
+    job: "Fullstack engineer",
+    stats: [
+      {
+        value: "34K",
+        label: "Followers"
+      },
+      {
+        value: "187",
+        label: "Follows"
+      },
+      {
+        value: "1.6K",
+        label: "Posts"
+      }
+    ]
+  }
+  const userinfo2={
+    image: "https://e0.pxfuel.com/wallpapers/61/216/desktop-wallpaper-futuristic-city-anime-futuristic-city.jpg",
+    avatar: "https://media.licdn.com/dms/image/C4E03AQFi0BqRyls7JA/profile-displayphoto-shrink_800_800/0/1658003345705?e=1686787200&v=beta&t=4PyOHFVMRnrRs7nsXBpE4sDA4_3mVM2XhkDKBsv2aJA",
+    name: "Morchid Salaheddine",
+    job: "Backend Engineer",
+    stats: [
+      {
+        value: "34K",
+        label: "Followers"
+      },
+      {
+        value: "187",
+        label: "Follows"
+      },
+      {
+        value: "1.6K",
+        label: "Posts"
+      }
+    ]
+  }
   const useStyles = createStyles((theme) => ({
     title: {
       fontSize: 34,
@@ -88,7 +132,10 @@ import {
       </Card>
     ));
     return (
+      <>
+    <HeroHeader />
       <Container size="lg" py="xl">
+        
         <Group position="center">
           <Badge variant="filled" size="lg">
             Best company ever
@@ -110,6 +157,19 @@ import {
         <SimpleGrid cols={3} spacing="md" mt={50} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
           {features}
         </SimpleGrid>
+        <Divider size={10} mt={30}/>
+        <Carousel />
+        <Divider size={10} mt={30} mb={30}/>
+        <HeroHeader2/>
+        <Title order={2} className={classes.title} align="center" mt="sm" mb='md'>
+          /Devs:
+        </Title>
+        <Flex align={'center'} justify={'space-evenly'}>
+        <UserCard image={userinfo1.image} avatar={userinfo1.avatar} name={userinfo1.name} job={userinfo1.job} stats={userinfo1.stats}  />
+        <UserCard image={userinfo2.image} avatar={userinfo2.avatar} name={userinfo2.name} job={userinfo2.job} stats={userinfo2.stats}  />
+        </Flex>
       </Container>
+      
+      </>
     );
   }

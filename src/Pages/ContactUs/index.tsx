@@ -17,7 +17,7 @@ export default function GetInTouchSimple() {
   });
 
   return (
-    <Container sx={{width:2000}} mt={60} >
+    <Container sx={{width:2000}} >
       <Paper shadow="sm" radius="xl" p="xl" withBorder
        sx={{ boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.5)' }}
       >

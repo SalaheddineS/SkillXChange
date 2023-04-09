@@ -7,12 +7,12 @@ import { useState } from "react";
 import { Flex } from "@mantine/core";
 import Header from "./SharedComponents/Header";
 import SideBar from "./SharedComponents/SideBar";
-import Features from "./Pages/Features";
+import Home from "./Pages/Home";
 import Error404 from "./Pages/Error404";
 import Authentification from "./Pages/Authentification";
 import SignUp from "./Pages/SignUp";
 import ContactUs from "./Pages/ContactUs";
-
+import Footer from "./SharedComponents/Footer";
 import { Route, Routes,BrowserRouter } from "react-router-dom";
 function App() {
   const [colorScheme, setColorScheme] = useState<ColorScheme>("dark");
@@ -26,7 +26,10 @@ function App() {
       toggleColorScheme={toggleColorScheme}
     >
       <MantineProvider
-        theme={{ colorScheme: colorScheme }}
+        theme={{ colorScheme: colorScheme,
+        primaryColor: 'teal' ,
+        
+        }}
         withGlobalStyles
         withNormalizeCSS
       >
@@ -44,18 +47,20 @@ function App() {
               link: "/ContactUs",
               label: "Contact Us",
             },
+            
           ]}
         />
-        <Flex my={"5%"}>
-          <SideBar />
+        
+          <div style={{marginTop:'5%'}}>
           <Routes>
             <Route path="*" element={<Error404 />} />
-            <Route path="/" element={<Features />} />
+            <Route path="/" element={<Home />} />
             <Route path="/Authentification" element={<Authentification />} />
             <Route path="/SignUp" element={<SignUp />} />
             <Route path="/ContactUs" element={<ContactUs/>} />
           </Routes>
-        </Flex>
+          </div>
+          <Footer data={[]} />
       </MantineProvider>
     </ColorSchemeProvider>
     </BrowserRouter>

@@ -27,7 +27,7 @@ function App() {
     >
       <MantineProvider
         theme={{ colorScheme: colorScheme,
-        primaryColor: 'teal' ,
+        primaryColor: 'pink' ,
         
         }}
         withGlobalStyles

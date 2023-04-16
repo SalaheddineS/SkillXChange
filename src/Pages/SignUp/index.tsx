@@ -9,11 +9,12 @@ import {
   MultiSelect,
   Avatar,
   Flex,
+  NativeSelect,
 } from "@mantine/core";
-import { useForm } from "@mantine/form";
 import { createStyles, SegmentedControl, Text } from "@mantine/core";
 import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
-import { useState } from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 const useStyles = createStyles((theme) => ({
   root: {
     backgroundColor:
@@ -36,38 +37,166 @@ const useStyles = createStyles((theme) => ({
     color: `${theme.white} !important`,
   },
 }));
-export default function GetInTouchSimple() {
-  const [ownSkills, setOwnSkills] = useState<string[]>([]);
-  const [wantedSkills, setWantedSkills] = useState<string[]>([]);
-  const [image, setImage] = useState<File | null>(null);
-  const { classes } = useStyles();
-  const form = useForm({
-    initialValues: {
-      name: "",
-      email: "",
-      lastname: "",
-      address: "",
-      message: "",
-      city: "",
-      phone: "",
-    },
-    validate: {
-      name: (value) => value.trim().length < 2,
-      lastname: (value) => value.trim().length < 2,
-      email: (value) => !/^\S+@\S+$/.test(value),
-      address: (value) => value.trim().length === 0,
-    },
-  });
 
+interface Credentials {
+  name: string;
+  lastname: string;
+  email: string;
+  password: string;
+
+  city: string;
+  gender: string;
+  phone: number;
+  address: string;
+}
+
+export default function GetInTouchSimple() {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    fetch("http://localhost:8081/getSkills")
+      .then((response) => response.json())
+      .then((data) => {
+        const newSkills = data.map((skill: any) => ({
+          label: skill.skill,
+          value: skill.skill,
+        }));
+        setSkills(newSkills);
+      })
+      .then(() => setLoading(false));
+  }, []);
+
+  const [mySkills, setMySkills] = useState<any>([]);
+  const [wantedSkills, setWantedSkills] = useState<any>([]);
+  const [skills, setSkills] = useState<any>([]);
+  const [image, setImage] = useState<File | null>(null);
+
+  const [credentials, setCredentials] = useState<Credentials>({
+    name: "",
+    lastname: "",
+    email: "",
+    password: "",
+    city: "CASABLANCA",
+    phone: 0,
+    gender: "",
+    address: "",
+  });
+  const [gender, setGender] = useState<string>("Male");
+
+  const cities = [
+    "CASABLANCA",
+    "RABAT",
+    "FES",
+    "MARRAKESH",
+    "TANGIER",
+    "AGADIR",
+    "OUARZAZATE",
+    "ESSAOUIRA",
+    "TETOUAN",
+    "MEKNES",
+    "NADOR",
+    "EL_JADIDA",
+    "KENITRA",
+    "TAZA",
+    "SAFI",
+    "OUDJA",
+    "BERKANE",
+    "TAROUDANT",
+    "BENI_MELLAL",
+    "KHOURIBGA",
+    "TAOUNATE",
+    "TAOURIRT",
+    "ZAGORA",
+    "SKHIRAT",
+    "BOUJDOUR",
+    "ASILAH",
+    "ZOUAGHA_MYAL",
+    "KHENIFRA",
+    "TIFLET",
+    "SIDI_KACEM",
+    "KHEMISSET",
+    "CHEFCHAOUEN",
+    "SIDI_IFNI",
+    "TAN_TAN",
+    "TIZNIT",
+  ];
+  const handleChange = (e: any) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    credentials.email=credentials.email.toUpperCase();
+    credentials.gender=gender;
+    console.log(credentials);
+    
+    axios
+      .post("http://localhost:8080/addUser", credentials)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      }).then(()=>{
+        mySkills.map((skill: any) => {
+          console.log(skill);
+          console.log(credentials.email);
+          axios
+            .post("http://localhost:8082/addAssociation", {
+              skill: skill,
+              email: credentials.email.toUpperCase(),
+            })
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
+      }).then(()=>{
+        wantedSkills.map((skill: any) => {
+          axios
+            .post("http://localhost:8082/addAssociationneeds", {
+              skill: skill,
+              email: credentials.email.toUpperCase(),
+            })
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
+      }).then(
+        ()=>{
+          if (image) {
+            const formData = new FormData();
+            formData.append("Image", image);
+            formData.append("fileName", credentials.email.toUpperCase());
+            axios
+              .post("http://localhost:8083/cloudinary/upload", formData)
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        }
+      )
+    
+  };
+  if (loading) return <div>Loading...</div>;
   return (
-    <Container size={1040} >
-      <form onSubmit={form.onSubmit(() => {})}>
+    <Container size={1040}>
+      <form>
         <Title
           order={2}
           size="h1"
           sx={(theme) => ({ fontFamily: `Greycliff CF, ${theme.fontFamily}` })}
           weight={900}
           align="center"
+          onClick={() => {
+            console.log(credentials);
+          }}
         >
           SkillXChange
         </Title>
@@ -82,14 +211,15 @@ export default function GetInTouchSimple() {
         </Title>
 
         <SegmentedControl
-          color="gray"
           radius="md"
           size="sm"
           data={["Male", "Female"]}
-          classNames={classes}
+          name="gender"
           mt="lg"
           sx={{ width: "100%" }}
+          onChange={(e) => setGender(e)}
         />
+
         <SimpleGrid
           cols={2}
           mt="sm"
@@ -100,14 +230,14 @@ export default function GetInTouchSimple() {
             placeholder="Your name"
             name="name"
             variant="filled"
-            {...form.getInputProps("name")}
+            onChange={handleChange}
           />
           <TextInput
             label="LastName"
             placeholder="Your LastName"
             name="lastname"
             variant="filled"
-            {...form.getInputProps("lastname")}
+            onChange={handleChange}
           />
         </SimpleGrid>
         <TextInput
@@ -116,15 +246,32 @@ export default function GetInTouchSimple() {
           name="email"
           variant="filled"
           mt="md"
-          {...form.getInputProps("email")}
+          onChange={handleChange}
         />
         <TextInput
-          label="City"
-          placeholder="Your city"
-          mt="md"
-          name="city"
+          label="Password"
+          placeholder="Your password"
+          name="password"
           variant="filled"
-          {...form.getInputProps("city")}
+          mt="md"
+          onChange={handleChange}
+        />
+        <TextInput
+          label="Confirm Password"
+          placeholder="confirm your password"
+          name="cpassword"
+          variant="filled"
+          mt="md"
+          onChange={handleChange}
+        />
+
+        <NativeSelect
+          mt={"md"}
+          data={cities}
+          label="City"
+          radius="xs"
+          name="city"
+          onChange={handleChange}
         />
         <TextInput
           label="Address"
@@ -132,82 +279,76 @@ export default function GetInTouchSimple() {
           mt="md"
           name="address"
           variant="filled"
-          {...form.getInputProps("address")}
+          onChange={handleChange}
         />
-        <NumberInput
+        <TextInput
           label="Phone"
           placeholder="Your phone number"
           mt="md"
           name="phone"
           variant="filled"
-          {...form.getInputProps("phone")}
-          hideControls
-          minLength={10}
-          maxLength={10}
+          onChange={handleChange}
         />
         <MultiSelect
           sx={{ marginTop: 10 }}
           label="Skills that you have"
           placeholder="Select skills"
-          data={["React", "Angular", "Vue", "Svelte", "Ember", "Backbone"]}
-          onChange={(value) => setOwnSkills(value)}
+          data={skills}
+          onChange={(value) => {
+            setMySkills(value);
+          }}
         />
         <MultiSelect
           sx={{ marginTop: 10 }}
           label="Skills that you want to learn from others"
           placeholder="Select skills"
-          data={["React", "Angular", "Vue", "Svelte", "Ember", "Backbone"]}
-          onChange={(value) => setWantedSkills(value)}
+          data={skills}
+          onChange={(value) => {
+            setWantedSkills(value);
+          }}
         />
-      <Flex align="center">
-  <Dropzone
-    mt="xl"
-    onDrop={(files) => {
-      console.log(files);
-      setImage(files[0])}}
-    accept={IMAGE_MIME_TYPE}
-    sx={(theme) => ({
-      width: 700,
-      minHeight: 110,
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      border: 0,
-      backgroundColor:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[6]
-          : theme.colors.gray[0],
+        <Flex align="center">
+          <Dropzone
+            mt="xl"
+            onDrop={(files) => {
+              setImage(files[0]);
+            }}
+            accept={IMAGE_MIME_TYPE}
+            sx={(theme) => ({
+              width: 700,
+              minHeight: 110,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              border: 0,
+              backgroundColor:
+                theme.colorScheme === "dark"
+                  ? theme.colors.dark[6]
+                  : theme.colors.gray[0],
 
-      "&[data-accept]": {
-        color: theme.white,
-        backgroundColor: theme.colors.blue[6],
-      },
+              "&[data-accept]": {
+                color: theme.white,
+                backgroundColor: theme.colors.blue[6],
+              },
 
-      "&[data-reject]": {
-        color: theme.white,
-        backgroundColor: theme.colors.red[6],
-      },
-    })}
-  >
-    <Text align="center">Profile Picture</Text>
-  </Dropzone>
-  <Avatar
-    mt="xl"
-    ml="xl"
-    size={200}
-    src={image ? URL.createObjectURL(image) : undefined}
-  />
-</Flex>
+              "&[data-reject]": {
+                color: theme.white,
+                backgroundColor: theme.colors.red[6],
+              },
+            })}
+          >
+            <Text align="center">Profile Picture</Text>
+          </Dropzone>
+          <Avatar
+            mt="xl"
+            ml="xl"
+            size={200}
+            src={image ? URL.createObjectURL(image) : undefined}
+          />
+        </Flex>
 
         <Group position="center" mt="xl">
-          <Button
-            type="submit"
-            size="md"
-            color={"gray"}
-            onClick={() => {
-              console.log(ownSkills);
-            }}
-          >
+          <Button  size="md" color={"gray"} onClick={handleSubmit}>
             Sign Up
           </Button>
         </Group>

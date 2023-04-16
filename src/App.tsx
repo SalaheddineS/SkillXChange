@@ -13,6 +13,7 @@ import Authentification from "./Pages/Authentification";
 import SignUp from "./Pages/SignUp";
 import ContactUs from "./Pages/ContactUs";
 import Footer from "./SharedComponents/Footer";
+import Profile from "./Pages/ProfilePage";
 import { Route, Routes,BrowserRouter } from "react-router-dom";
 function App() {
   const [colorScheme, setColorScheme] = useState<ColorScheme>("dark");
@@ -58,6 +59,7 @@ function App() {
             <Route path="/Authentification" element={<Authentification />} />
             <Route path="/SignUp" element={<SignUp />} />
             <Route path="/ContactUs" element={<ContactUs/>} />
+            <Route path="/Profile" element={<Profile/>} />
           </Routes>
           </div>
           <Footer data={[]} />

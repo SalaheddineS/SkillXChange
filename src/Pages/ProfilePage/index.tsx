@@ -15,7 +15,7 @@ import {
   import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
   import axios from "axios";
   import { useState, useEffect } from "react";
-
+  import { Navigate,useNavigate } from "react-router-dom";
 
   
   
@@ -24,7 +24,6 @@ import {
     lastname: string;
     email: string;
     password: string;
-  
     city: string;
     gender: string;
     phone: number;
@@ -33,11 +32,12 @@ import {
   
   export default function GetInTouchSimple() {
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
     useEffect(() => {
         const email=localStorage.getItem("email")
         const id = localStorage.getItem("id")
       fetch("http://localhost:8081/getSkills")
-        .then((response) => response.json())
+        .then((response) => response.json()
         .then((data) => {
           const newSkills = data.map((skill: any) => ({
             label: skill.skill,
@@ -53,15 +53,8 @@ import {
             axios.get("http://localhost:8080/getUserById/"+id).then((res)=>{
                 res.data.password="";
                 setCredentials(res.data)
-            })
-        }).then(
-            ()=>{axios.post("http://localhost:8082/getSingleAssociation",{email:email}).then((res)=>{
-                console.log(res.data)
-            })}
-        )
-
-
-        .then(() => setLoading(false));
+            }).then(() => setLoading(false))
+        }));
     }, []);
   
     const [mySkills, setMySkills] = useState<any>([]);
@@ -125,53 +118,63 @@ import {
       e.preventDefault();
       credentials.email=credentials.email.toUpperCase();
       credentials.gender=gender;
-      console.log(credentials);
+      console.log(gender);
       
       axios
-        .post("http://localhost:8080/addUser", credentials)
+        .put("http://localhost:8080/updateUser", credentials)
         .then((res) => {
           console.log(res);
         })
         .catch((err) => {
           console.log(err);
-        }).then(()=>{
-          mySkills.map((skill: any) => {
-            console.log(skill);
-            console.log(credentials.email);
-            axios
-              .post("http://localhost:8082/addAssociation", {
-                skill: skill,
-                email: credentials.email.toUpperCase(),
+        })
+        .then(()=>{
+            axios({
+                method: 'delete',
+                url: 'http://localhost:8082/deleteUserAssociations',
+                data: {
+                    email: credentials.email.toUpperCase(),
+                }
+              }).then(()=>{
+                mySkills.map((skill: any) => {
+                  console.log(skill);
+                  console.log(credentials.email);
+                  axios
+                    .post("http://localhost:8082/addAssociation", {
+                      skill: skill,
+                      email: credentials.email.toUpperCase(),
+                    })
+                    .then((res) => {
+                      console.log(res);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                });
+              }).then(()=>{
+                wantedSkills.map((skill: any) => {
+                  axios
+                    .post("http://localhost:8082/addAssociationneeds", {
+                      skill: skill,
+                      email: credentials.email.toUpperCase(),
+                    })
+                    .then((res) => {
+                      console.log(res);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                });
               })
-              .then((res) => {
-                console.log(res);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          });
-        }).then(()=>{
-          wantedSkills.map((skill: any) => {
-            axios
-              .post("http://localhost:8082/addAssociationneeds", {
-                skill: skill,
-                email: credentials.email.toUpperCase(),
-              })
-              .then((res) => {
-                console.log(res);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          });
-        }).then(
+        })
+        .then(
           ()=>{
             if (image) {
               const formData = new FormData();
               formData.append("Image", image);
               formData.append("fileName", credentials.email.toUpperCase());
               axios
-                .post("http://localhost:8083/cloudinary/upload", formData)
+                .post("http://localhost:8083/cloudinary/update", formData)
                 .then((res) => {
                   console.log(res);
                 })
@@ -180,10 +183,10 @@ import {
                 });
             }
           }
-        )
+        ).then(()=>{navigate("/")})
       
     };
-    if (loading) return <div>Loading...</div>;
+    if (loading ) return <div>Loading...</div>;
     return (
         
       <Container size={1040}>
@@ -247,7 +250,7 @@ import {
             weight={900}
             align="center"
           >
-            Sign Up
+           Edit
           </Title>
   
           <SegmentedControl
@@ -271,6 +274,7 @@ import {
               name="name"
               variant="filled"
               onChange={handleChange}
+              defaultValue={credentials.name}
             />
             <TextInput
               label="LastName"
@@ -278,16 +282,10 @@ import {
               name="lastname"
               variant="filled"
               onChange={handleChange}
+              defaultValue={credentials.lastname}
             />
           </SimpleGrid>
-          <TextInput
-            label="Email"
-            placeholder="Your email"
-            name="email"
-            variant="filled"
-            mt="md"
-            onChange={handleChange}
-          />
+         
           <TextInput
             label="Password"
             placeholder="Your password"
@@ -312,6 +310,7 @@ import {
             radius="xs"
             name="city"
             onChange={handleChange}
+            defaultValue={credentials.city}
           />
           <TextInput
             label="Address"
@@ -320,6 +319,7 @@ import {
             name="address"
             variant="filled"
             onChange={handleChange}
+            defaultValue={credentials.address}
           />
           <TextInput
             label="Phone"
@@ -328,10 +328,11 @@ import {
             name="phone"
             variant="filled"
             onChange={handleChange}
+            defaultValue={credentials.phone}
           />
           <MultiSelect
             sx={{ marginTop: 10 }}
-            label="Skills that you have"
+            label="Skills that you have (Re-select everything)"
             placeholder="Select skills"
             data={skills}
             onChange={(value) => {
@@ -340,8 +341,9 @@ import {
           />
           <MultiSelect
             sx={{ marginTop: 10 }}
-            label="Skills that you want to learn from others"
+            label="Skills that you want to learn from others (Re-select everything)"
             placeholder="Select skills"
+          
             data={skills}
             onChange={(value) => {
               setWantedSkills(value);
@@ -351,7 +353,7 @@ import {
   
           <Group position="center" mt="xl">
             <Button  size="md" color={"gray"} onClick={handleSubmit}>
-              Sign Up
+              Edit
             </Button>
           </Group>
         </form>

@@ -1,6 +1,6 @@
 import { TextInput, Textarea, SimpleGrid, Group, Title, Button, Container, Paper } from '@mantine/core';
 import { useForm } from '@mantine/form';
-
+import axios from 'axios';
 export default function GetInTouchSimple() {
   const form = useForm({
     initialValues: {
@@ -21,7 +21,10 @@ export default function GetInTouchSimple() {
       <Paper shadow="sm" radius="xl" p="xl" withBorder
        sx={{ boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.5)' }}
       >
-    <form onSubmit={form.onSubmit(() => {})}>
+    <form onSubmit={form.onSubmit(() => {
+      axios.post('http://localhost:8084/addcontactus', form.values)
+      .then(res => {console.log(res);})
+    })}>
       <Title
         order={2}
         size="h1"

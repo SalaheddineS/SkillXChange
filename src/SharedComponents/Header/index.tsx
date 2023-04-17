@@ -4,6 +4,7 @@ import { useDisclosure } from '@mantine/hooks';
 import astro from '../../Utilities/SVGs/astro.svg'
 import LightNdark from '../LightNdarkModes';
 import {Link} from 'react-router-dom';
+import { Navigate,useNavigate } from 'react-router-dom';
 const HEADER_HEIGHT =58;
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -84,11 +85,20 @@ interface HeaderMiddleProps {
   links: { link: string; label: string }[];
 }
 
+
+
 export default function HeaderMiddle({ links }: HeaderMiddleProps) {
   const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
-
+  const navigate = useNavigate();
+  const handleDiconnect = () => {
+   
+    localStorage.setItem("logged","false");
+    localStorage.setItem("id","null");
+    localStorage.setItem("token","null");
+        navigate('/');
+  }
   const items = links.map((link) => (
     
     <Link
@@ -121,17 +131,42 @@ export default function HeaderMiddle({ links }: HeaderMiddleProps) {
         </Group>
 
         <Image src={astro} height={50} width={50}/>
-       
-        <Group spacing={19} className={classes.social}  position="right" noWrap >
-            <Link to={'/Authentification'}>
-            <Button variant="default">Log in</Button>
-            </Link>
-            <Link to={'/SignUp'}>
-            <Button>Sign up</Button>
-            </Link>
-          <LightNdark />
-        </Group>
+
+        {localStorage.getItem("logged")=="false" ? (
+  <Group spacing={19} className={classes.social} position="right" noWrap>
+    <Link to={"/Authentification"}>
+      <Button variant="default">Log in</Button>
+    </Link>
+    <Link to={"/SignUp"}>
+      <Button>Sign up</Button>
+    </Link>
+    <LightNdark />
+  </Group>
+) : (
+  <>
+  <Group spacing={19} className={classes.social} position="right" noWrap>
+  <Link to={"/"}>
+    <Button
+    size='sm'
+    color='green'
+    >Go Chat!</Button>
+  </Link>
+  <Link to={"/Profile"}>
+    <Button size='sm'>My Profile</Button>
+  </Link>
+  <Button
+   onClick={handleDiconnect}
+  size='sm'
+ color='red'
+ >Disconnect</Button>
+  <LightNdark />
+ 
+</Group>
+ </>
+)}
+
       </Container>
+      
     </Header>
   );
 }

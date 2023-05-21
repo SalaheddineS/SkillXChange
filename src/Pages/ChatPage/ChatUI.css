@@ -25,3 +25,15 @@
   background-color: #555;
   cursor: pointer;
 }
+
+.input-dark {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #666;
+  width: 500px;
+  padding: 12px;
+  border-radius: 5px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  /* Add any additional styles for dark mode */
+}

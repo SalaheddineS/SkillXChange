@@ -70,7 +70,7 @@ export default function(){
         }
         sendJsonMessage(message);
        setAllMyMessages([...allMyMessages, message])
-
+   
     }
     const handleCurrentlyChatting = (e:any) => {
         setCurrentlyChattingWith(e.userEmail)
@@ -131,10 +131,14 @@ export default function(){
         ))}
       </div>
     
-      {}
-      {allMyMessages.map((message:any) => (
-        <div className="message-container"> {message.message} </div>
+      
+     
+      {allMyMessages.filter((message:any)=> message.target === currentlyChattingWith).map((message:any)=>(
+        <h1>{message.message}</h1>
       ))}
+     
+
+
       <input
         className="input-dark"
         type="text"

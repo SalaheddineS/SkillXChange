@@ -133,7 +133,7 @@ export default function(){
     
       
      
-      {allMyMessages.filter((message:any)=> message.target === currentlyChattingWith).map((message:any)=>(
+      {allMyMessages.filter((message:any)=> message.target === currentlyChattingWith || (message.email==currentlyChattingWith && message.target==myEmail)).map((message:any)=>(
         <h1>{message.message}</h1>
       ))}
      

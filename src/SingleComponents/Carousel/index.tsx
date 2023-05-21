@@ -69,38 +69,38 @@ function Card({ image, title, category }: CardProps) {
 const data = [
   {
     image:'https://img.freepik.com/free-vector/cute-astronaut-floating-with-planet-balloon-space-cartoon-vector-icon-illustration-technology-science-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-3850.jpg',
-        title: 'Best forests to visit in North America',
-    category: 'nature',
+        title: 'Learn how to communicate with your team better',
+    category: 'Communication',
   },
   {
     image:
       'https://img.freepik.com/premium-vector/cute-astronaut-with-finger-love-pose-cartoon-icon-vector-illustration-design-isolated-yellow-flat-cartoon-style_422763-284.jpg',
-    title: 'Hawaii beaches review: better than you think',
-    category: 'beach',
+    title: 'Relaxation techniques for stress relief',
+    category: 'nature',
   },
   {
     image:
       'https://img.freepik.com/free-vector/cute-astronaut-feeding-alien-cartoon-vector-icon-illustration-science-technology-icon-isolated-flat_138676-5413.jpg',
-    title: 'Mountains at night: 12 best locations to enjoy the view',
-    category: 'nature',
-  },
-  {
-    image:
-      'https://img.freepik.com/premium-vector/cute-astronaut-talking-alien-with-megaphone-cartoon-vector-icon-illustration-science-technology_138676-7271.jpg',
-    title: 'Aurora in Norway: when to visit for best experience',
-    category: 'nature',
-  },
-  {
-    image:
-      'https://img.freepik.com/premium-vector/cute-astronaut-holding-rocket-moon-space-cartoon-vector-icon-illustration-science-technology_138676-6405.jpg',
-    title: 'Best places to visit this winter',
+    title: 'Ask people about places to visit this summer',
     category: 'tourism',
   },
   {
     image:
+      'https://img.freepik.com/premium-vector/cute-astronaut-talking-alien-with-megaphone-cartoon-vector-icon-illustration-science-technology_138676-7271.jpg',
+    title: 'Learn to code with people mastering languages',
+    category: 'Programming',
+  },
+  {
+    image:
+      'https://img.freepik.com/premium-vector/cute-astronaut-holding-rocket-moon-space-cartoon-vector-icon-illustration-science-technology_138676-6405.jpg',
+    title: 'How to become a better person in 5 minutes a day',
+    category: 'Self-development',
+  },
+  {
+    image:
       'https://img.freepik.com/premium-vector/cute-astronaut-out-phone-space-with-moon-cartoon-vector-icon-illustration-science-technology-icon_138676-6869.jpg',
-    title: 'Active volcanos reviews: travel at your own risk',
-    category: 'nature',
+    title: 'How to get started with boxing',
+    category: 'Sports',
   },
 ];
 

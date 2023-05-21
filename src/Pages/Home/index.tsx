@@ -138,17 +138,16 @@ import {
         
         <Group position="center">
           <Badge variant="filled" size="lg">
-            Best company ever
+            SkillXChange
           </Badge>
         </Group>
   
         <Title order={2} className={classes.title} align="center" mt="sm">
-          Integrate effortlessly with any technology stack
+          Trade skills effortlessly
         </Title>
   
         <Text color="dimmed" className={classes.description} align="center" mt="md">
-          Every once in a while, you’ll see a Golbat that’s missing some fangs. This happens when
-          hunger drives it to try biting a Steel-type Pokémon.
+          Don't be shy , our app if fully open source , and the people are friendly here , get out your comfort zone and try it out !
         </Text>
   
         <SimpleGrid cols={3} spacing="md" mt={20} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>

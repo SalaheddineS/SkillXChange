@@ -1,0 +1,27 @@
+.competences-container {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+}
+
+.scrollable-container {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  margin-top: 10px;
+}
+
+.skill-button {
+  background-color: #222;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.skill-button:hover {
+  background-color: #555;
+  cursor: pointer;
+}

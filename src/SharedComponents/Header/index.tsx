@@ -145,7 +145,7 @@ export default function HeaderMiddle({ links }: HeaderMiddleProps) {
 ) : (
   <>
   <Group spacing={19} className={classes.social} position="right" noWrap>
-  <Link to={"/"}>
+  <Link to={"/Chat"}>
     <Button
     size='sm'
     color='green'

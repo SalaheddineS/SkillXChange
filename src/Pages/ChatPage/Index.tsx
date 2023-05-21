@@ -1,16 +1,34 @@
 import { useEffect, useState } from "react"
 import UserInfo from "../../SingleComponents/UserInfo"
 import './ChatUI.css'
+import useWebSocket, { ReadyState } from 'react-use-websocket';
+
 
 export default function(){
+
     const myEmail = localStorage.getItem('email')
+    const { sendJsonMessage, lastMessage, readyState } = useWebSocket('ws://localhost:3010/chat?email='+myEmail);
+
     const [listCompetences, setListCompetences]:any = useState([]);
     const [listUsers, setListUsers]:any = useState([]);
     const [listUsersToBeShowed, setListUsersToBeShowed]:any = useState([]); 
     const [currentlyChattingWith, setCurrentlyChattingWith]:any = useState('');
     const [inputValue, setInputValue] = useState('');
     const [allMyMessages, setAllMyMessages]:any = useState([]);
+    const connectionStatus = {
+        [ReadyState.CONNECTING]: 'Connecting',
+        [ReadyState.OPEN]: 'Open',
+        [ReadyState.CLOSING]: 'Closing',
+        [ReadyState.CLOSED]: 'Closed',
+        [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
+      }[readyState];
+
+
+
     useEffect(()=>{
+        if (lastMessage !== null) {
+            setAllMyMessages((prev:any) => prev.concat(lastMessage));
+          }
         //Ramener les Tout les competences
         fetch('http://localhost:8081/getSkills')
         .then(response => response.json())
@@ -28,10 +46,10 @@ export default function(){
         fetch('http://localhost:3010/GetMessages?email='+ myEmail)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
+           
             setAllMyMessages(data)
         })
-    },[])
+    },[lastMessage])
     //Handle Clicking on skills and displaying users with that skill
     const handleSkills=(e:any)=> {
         
@@ -49,10 +67,10 @@ export default function(){
             email: myEmail,
             message: inputValue,
             target : currentlyChattingWith,
-            date : new Date()
         }
+        sendJsonMessage(message);
+       setAllMyMessages([...allMyMessages, message])
 
-        setAllMyMessages([...allMyMessages, message])
     }
     const handleCurrentlyChatting = (e:any) => {
         setCurrentlyChattingWith(e.userEmail)
@@ -123,9 +141,12 @@ export default function(){
         placeholder="Enter your message"
         onChange={(e) => setInputValue(e.target.value)}
       />
-        <button className="button-dark" onClick={handleSendMessage} >Send</button>
+        <button className="button-dark" onClick={handleSendMessage} 
+         disabled={readyState !== ReadyState.OPEN}
+        >Send</button>
     </div>
-  
+    {lastMessage ? <span>Last message: {lastMessage.data}</span> : null}
+    <span>The WebSocket is currently {connectionStatus}</span>
         </div>
       );
     else{

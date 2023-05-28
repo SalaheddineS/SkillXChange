@@ -75,7 +75,7 @@ const QuizPage6 = () => {
               </label>
             ))}
           </div>
-          <button onClick={handleSubmit}>Soumettre</button>
+          <button onClick={handleSubmit} style={{backgroundColor:"#9B26B6",color:"#fff",cursor:"pointer",border:"none",borderRadius:"5px",padding:"10px 20px"}} >send</button>
         </div>
       ) : (
         <div className="results-container">

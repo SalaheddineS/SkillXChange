@@ -115,13 +115,14 @@ import {
       setCredentials({ ...credentials, [e.target.name]: e.target.value });
     };
     const handleSubmit = (e: any) => {
+      const token = localStorage.getItem("token");
       e.preventDefault();
       credentials.email=credentials.email.toUpperCase();
       credentials.gender=gender;
       console.log(gender);
       
       axios
-        .put("http://localhost:8080/updateUser", credentials)
+        .put("http://localhost:8080/updateUser/"+token, credentials)
         .then((res) => {
           console.log(res);
         })

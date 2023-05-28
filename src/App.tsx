@@ -43,7 +43,7 @@ function App() {
             },
             {
               link: "/learn",
-              label: "Features",
+              label: "Quizz",
             },
             {
               link: "/ContactUs",

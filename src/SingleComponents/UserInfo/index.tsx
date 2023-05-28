@@ -11,7 +11,7 @@ import {
   const useStyles = createStyles((theme) => ({
     user: {
       display: 'block',
-      width: '25%',
+      width: '100%',
       padding: theme.spacing.md,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
   
@@ -32,12 +32,15 @@ import {
     const { classes } = useStyles();
   
     return (
-      <UnstyledButton className={classes.user} {...others}>
+      <UnstyledButton className={classes.user} {...others}
+      
+      >
         <Group>
+          
           <Avatar src={image} radius="xl" />
   
-          <div style={{ flex: 1 }}>
-            <Text size="sm" weight={500}>
+          <div >
+            <Text size="sm" >
               {name}
             </Text>
   

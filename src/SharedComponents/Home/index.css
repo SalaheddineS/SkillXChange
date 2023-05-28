@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* Appliquer la police Poppins par défaut à tous les éléments de la page */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-image: url("../../assets/top_background.png");
+  background-repeat: no-repeat;
+  background-size: 30%;
+}
+
+/* Style pour le conteneur principal */
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 400px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Style pour le titre */
+.container h1 {
+  color: #fff;
+  font-size: 32px;
+  /* ajuster la valeur de margin-bottom */
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Style pour le formulaire */
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Style pour les champs de texte */
+input[type="text"],
+input[type="email"] {
+ 
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  border: none;
+  background-color: #f5f5f5;
+  font-family: 'Poppins', sans-serif;
+ 
+}
+
+/* Style pour le bouton */
+button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+  background-color: #c191d6; /* changer la couleur d'arrière-plan */
+  color:white; /* changer la couleur du texte */
+  font-size: 16px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Style pour l'effet hover sur le bouton */
+button:hover {
+  background-color: #f5f5f5;
+  color: #c191d6;
+}
+
+/* Style pour le bouton de type "submit" */
+input[type="submit"] {
+  /* changer la couleur d'arrière-plan du bouton submit */
+  color: white; /* changer la couleur du texte du bouton submit */
+  border: none;
+  padding: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+/* Style pour le texte du titre avec la classe "text" */
+.container h1.text {
+  color: #8f46ae;
+  font-family: 'Poppins', sans-serif;
+}
+.container h1.text1 {
+    color: #c191d6;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: -20px;
+  }

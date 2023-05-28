@@ -50,7 +50,7 @@ input[type="text"],
 input[type="email"] {
  
   padding: 10px;
-  margin-bottom: 20px;
+
   border-radius: 20px;
   border: none;
   background-color: #f5f5f5;
@@ -59,17 +59,7 @@ input[type="email"] {
 }
 
 /* Style pour le bouton */
-button {
-  width: 100%;
-  padding: 10px;
-  border-radius: 20px;
-  border: none;
-  background-color: #c191d6; /* changer la couleur d'arrière-plan */
-  color:white; /* changer la couleur du texte */
-  font-size: 16px;
-  cursor: pointer;
-  font-family: 'Poppins', sans-serif;
-}
+
 
 /* Style pour l'effet hover sur le bouton */
 button:hover {
